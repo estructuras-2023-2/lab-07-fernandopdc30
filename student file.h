@@ -47,26 +47,3 @@ vector<int> Torneo(vector<int> habilidades, int N, int K) {
 
     return resultado;
 }
-
-int main() {
-    // Prueba 1: Caso de prueba de ejemplo
-    vector<int> habilidades1 = {1, 2, 3};
-    int N1 = 2;
-    int K1 = 2;
-    vector<int> resultado1 = Torneo(habilidades1, N1, K1);
-    assert(resultado1[0] == 2);
-    assert(resultado1[1] == 3);
-
-    // Prueba 2: Caso de prueba con habilidades ordenadas en orden inverso
-    vector<int> habilidades2 = {3, 2, 1};
-    int N2 = 2;
-    int K2 = 2;
-    vector<int> resultado2 = Torneo(habilidades2, N2, K2);
-    assert(resultado2[0] == 2);
-    assert(resultado2[1] == 1);
-
-    // Agrega más casos de prueba aquí...
-
-    cout << "Todas las pruebas pasaron" << endl;
-    return 0;
-}
