@@ -3,38 +3,28 @@
 using namespace std;
 
 vector<int> Torneo(vector<int> habilidades, int N, int K) {
+    int winner = 0;
+    int loser = 1;
+    int consecutiveWins = 0;
+
     while (K > 0) {
-        int p1 = 0;
-        int p2 = 1;
-
-        if (habilidades[p1] < habilidades[p2]) {
-            swap(p1, p2);
+        if (habilidades[loser] > habilidades[winner]) {
+            swap(winner, loser);
         }
 
-        if (N == 1) {
-            return {habilidades[p2], habilidades[p1]};
+        consecutiveWins++;
+
+        if (consecutiveWins == N) {
+            K--;
+            consecutiveWins = 0;
+        } else {
+            loser++;
         }
 
-        int consecutiveWins = 1;
-
-        while (consecutiveWins < N) {
-            if (p2 >= habilidades.size() - 1) {
-                return {habilidades[p1], habilidades[p2]};
-            }
-
-            p2++;
-            consecutiveWins++;
-        }
-
-        if (p2 >= habilidades.size() - 1) {
-            return {habilidades[p1], habilidades[p2]};
-        }
-
-        K--;
-        if (habilidades[p1] > habilidades[p2]) {
-            swap(p1, p2);
+        if (loser == habilidades.size()) {
+            return {habilidades[loser - 1], habilidades[winner]};
         }
     }
 
-    return {habilidades[1], habilidades[0]};
+    return {habilidades[loser], habilidades[winner]};
 }
