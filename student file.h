@@ -1,47 +1,40 @@
 #include <vector>
-#include <queue>
 
 using namespace std;
 
-// Método: Torneo
 vector<int> Torneo(vector<int> habilidades, int N, int K) {
-    queue<int> cola;
-    vector<int> resultado(2);
+    while (K > 0) {
+        int p1 = 0;
+        int p2 = 1;
 
-    // Construir la cola de prioridad
-    priority_queue<int, vector<int>, greater<int>> colaPrioridad;
-    for (int habilidad : habilidades) {
-        colaPrioridad.push(habilidad);
-    }
-
-    int juegosGanados = 0;
-    int habilidadGanadora;
-
-    // Jugar juegos hasta llegar al K
-    while (juegosGanados < K) {
-        int habilidadPerdedora = colaPrioridad.top();
-        colaPrioridad.pop();
-
-        if (!colaPrioridad.empty()) {
-            habilidadGanadora = colaPrioridad.top();
-            colaPrioridad.pop();
-            juegosGanados++;
-
-            if (juegosGanados >= N) {
-                cola.push(habilidadGanadora);
-                juegosGanados = 0;
-            } else {
-                colaPrioridad.push(habilidadGanadora);
-            }
+        if (habilidades[p1] < habilidades[p2]) {
+            swap(p1, p2);
         }
 
-        cola.push(habilidadPerdedora);
+        if (N == 1) {
+            return {habilidades[p2], habilidades[p1]};
+        }
+
+        int consecutiveWins = 1;
+
+        while (consecutiveWins < N) {
+            if (p2 >= habilidades.size() - 1) {
+                return {habilidades[p1], habilidades[p2]};
+            }
+
+            p2++;
+            consecutiveWins++;
+        }
+
+        if (p2 >= habilidades.size() - 1) {
+            return {habilidades[p1], habilidades[p2]};
+        }
+
+        K--;
+        if (habilidades[p1] > habilidades[p2]) {
+            swap(p1, p2);
+        }
     }
 
-    // Asignar habilidades del perdedor y ganador del juego K
-    resultado[0] = cola.front();
-    cola.pop();
-    resultado[1] = cola.front();
-
-    return resultado;
+    return {habilidades[1], habilidades[0]};
 }
